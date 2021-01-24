@@ -6,14 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Room</title>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="./css/styles.css">
 </head>
 
 <body>
 
-    <div id="videos">
-        <video id="local-video" autoplay muted></video>
-        <video id="remote-video" autoplay></video>
+    <div id="videos" class="videos">
+        <video id="remote-video" class="remoteVideo" autoplay muted playsinline></video>
+        <video id="local-video" class="localVideo" autoplay muted playsinline></video>
+
+        <div class="controls">
+            <button id="ctrl-audio" class="control">
+                <i class="bi bi-mic"></i>
+            </button>
+            <button id="ctrl-video" class="control">
+                <i class="bi bi-camera-video"></i>
+            </button>
+            <button id="ctrl-call" class="control end-call">
+                <i class="bi bi-telephone-minus"></i>
+            </button>
+        </div>
     </div>
 
     <script src="https://cdn.socket.io/socket.io-3.0.1.min.js"></script>

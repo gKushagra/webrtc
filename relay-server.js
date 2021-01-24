@@ -5,7 +5,7 @@ const server = http.createServer(app);
 const socket = require('socket.io');
 const io = socket(server, {
     cors: {
-        origin: "http://127.0.0.1:5500",
+        origin: "http://127.0.0.1:5501",
         methods: ["GET", "POST"]
     }
 });

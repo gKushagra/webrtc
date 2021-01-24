@@ -2,6 +2,57 @@
 const localVideo = document.getElementById('local-video');
 const remoteVideo = document.getElementById('remote-video');
 
+const controls = document.getElementById('controls');
+const videos = document.getElementById('videos');
+
+const micBtn = document.getElementById('ctrl-audio');
+const videoBtn = document.getElementById('ctrl-video');
+const callBtn = document.getElementById('ctrl-call');
+
+setInterval(() => {
+    remoteVideo.width = window.innerWidth;
+    remoteVideo.height = window.innerHeight;
+
+    localVideo.width = window.innerWidth * 0.20;
+    localVideo.height = window.innerHeight * 0.20;
+    localVideo.style.bottom = 0;
+    localVideo.style.right = 0;
+    localVideo.style.borderRadius = "10px";
+}, 1000);
+
+micBtn.addEventListener('click', () => {
+    var enabled = localVideoStream.getAudioTracks()[0].enabled;
+    if (enabled) {
+        localVideoStream.getAudioTracks()[0].enabled = false;
+        micBtn.innerHTML = '<i class="bi bi-mic-mute"></i>';
+    } else {
+        localVideoStream.getAudioTracks()[0].enabled = true;
+        micBtn.innerHTML = '<i class="bi bi-mic"></i>';
+    }
+});
+
+videoBtn.addEventListener('click', () => {
+    var enabled = localVideoStream.getVideoTracks()[0].enabled;
+    if (enabled) {
+        localVideoStream.getVideoTracks()[0].enabled = false;
+        videoBtn.innerHTML = '<i class="bi bi-camera-video-off"></i>';
+    } else {
+        localVideoStream.getVideoTracks()[0].enabled = true;
+        videoBtn.innerHTML = '<i class="bi bi-camera-video"></i>';
+    }
+});
+
+callBtn.addEventListener('click', () => {
+    // localPeer.close();
+    localVideo.srcObject = null;
+    remoteVideo.srcObject = null;
+    localVideoStream = null;
+    videos.innerHTML = '<h5 style="color: white;">Call Ended</h5>'
+    setTimeout(() => {
+        window.location.replace('http://127.0.0.1:5501/client');
+    }, 1000);
+});
+
 // declare some variables
 var currentRoomId;
 var localVideoStream;
