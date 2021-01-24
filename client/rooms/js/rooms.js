@@ -5,6 +5,7 @@ const remoteVideo = document.getElementById('remote-video');
 const controls = document.getElementById('controls');
 const videos = document.getElementById('videos');
 
+const copyBtn = document.getElementById('ctrl-copy');
 const micBtn = document.getElementById('ctrl-audio');
 const videoBtn = document.getElementById('ctrl-video');
 const callBtn = document.getElementById('ctrl-call');
@@ -19,6 +20,26 @@ setInterval(() => {
     localVideo.style.right = 0;
     localVideo.style.borderRadius = "10px";
 }, 1000);
+
+copyBtn.addEventListener('click', () => {
+    // log(window.location);
+    // window.prompt("Copy room link: Ctrl+C, Enter", window.location);
+    var textarea = document.createElement("textarea");
+    textarea.textContent = window.location;
+    textarea.style.position = "fixed";  // Prevent scrolling to bottom of page in Microsoft Edge.
+    document.body.appendChild(textarea);
+    textarea.select();
+    try {
+        return document.execCommand("copy");  // Security exception may be thrown by some browsers.
+    }
+    catch (ex) {
+        console.warn("Copy to clipboard failed.", ex);
+        return false;
+    }
+    finally {
+        document.body.removeChild(textarea);
+    }
+});
 
 micBtn.addEventListener('click', () => {
     var enabled = localVideoStream.getAudioTracks()[0].enabled;
@@ -77,7 +98,7 @@ function loadLocalMedia() {
         .then(stream => {
             localVideo.srcObject = stream;
             localVideoStream = stream;
-
+            localVideoStream.getAudioTracks()[0].enabled = false;
             initSocketConnection();
         })
         .catch(error => {
