@@ -1,11 +1,19 @@
 const express = require('express');
 const http = require('http');
 const app = express();
+app.use(express.static(__dirname + '/client'));
 const server = http.createServer(app);
 const socket = require('socket.io');
+var whitelist = ['http://localhost:8585/', 'https://rooms.softwright.in/']
 const io = socket(server, {
     cors: {
-        origin: "http://127.0.0.1:5501",
+        origin: function (origin, callback) {
+            if (whitelist.indexOf(origin) !== -1) {
+                callback(null, true)
+            } else {
+                callback(new Error('Not allowed by CORS'))
+            }
+        },
         methods: ["GET", "POST"]
     }
 });
@@ -46,4 +54,4 @@ io.on("connection", socket => {
 
 });
 
-server.listen(4554, () => { console.log('relay server running on port 4554') });
+server.listen(8585, () => { console.log('Socket server listening on port 8585') });

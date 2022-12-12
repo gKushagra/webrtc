@@ -70,7 +70,7 @@ callBtn.addEventListener('click', () => {
     localVideoStream = null;
     videos.innerHTML = '<h5 style="color: white;">Call Ended</h5>'
     setTimeout(() => {
-        window.location.replace('http://127.0.0.1:5501/client');
+        window.location.replace('/');
     }, 1000);
 });
 
@@ -107,7 +107,7 @@ function loadLocalMedia() {
 }
 
 function initSocketConnection() {
-    socket = io('http://localhost:4554');
+    socket = io('http://localhost:8585');
 
     socket.emit("join-room", currentRoomId);
 

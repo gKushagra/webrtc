@@ -6,7 +6,7 @@ createRoomBtn.addEventListener('click', (event) => {
     log(currentRoomId);
 
     // navigate to new room
-    var url = new URL('http://127.0.0.1:5501/client/rooms/index.html');
+    var url = new URL(window.location.origin + '/rooms/index.html');
     url.searchParams.append("token", currentRoomId);
     window.location.replace(url);
 });
